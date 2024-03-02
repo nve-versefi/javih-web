@@ -77,3 +77,48 @@
 .form-radio {
     @apply text-purple-600;
 }
+
+.parallax-container {
+    height: 500px; /* Adjust as needed */
+    position: relative;
+    overflow: hidden;
+}
+  
+  .parallax-image {
+    position: absolute;
+    width: 100%;
+    height: auto;
+    top: -15%; /* Adjust based on your image */
+    left: 0;
+    will-change: transform; /* Optimizes performance */
+}
+
+/* ContactForm.module.css */
+.formInput {
+    @apply mt-1 block w-full border-gray-300 shadow-sm sm:text-sm rounded-md;
+  }
+  
+  .formLabel {
+    @apply block text-sm font-medium text-gray-700;
+  }
+  
+  .checkboxInput {
+    @apply h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded;
+  }
+  
+  .checkboxLabel {
+    @apply flex items-center;
+  }
+  
+  .submitButton {
+    @apply inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500;
+  }
+  
+  /* styles/global.css */
+.card.start-entering {
+    transform: translateY(100%);
+  }
+  .card.leaving {
+    transform: translateY(-100%);
+  }
+  

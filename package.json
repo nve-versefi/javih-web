@@ -1,6 +1,6 @@
 {
-  "name": "open-pro-next",
-  "version": "0.1.0",
+  "name": "pablo-hermosa-web",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -10,20 +10,37 @@
   },
   "dependencies": {
     "@headlessui/react": "^1.7.17",
-    "@types/node": "^20.10.4",
-    "@types/react": "^18.2.42",
+    "@hookform/resolvers": "^3.3.4",
+    "@types/react": "^18.2.15",
     "@types/react-dom": "^18.2.17",
+    "axios": "^1.2.1",
     "aos": "^3.0.0-beta.6",
+    "@types/node": "^20.4.4",
+    "dotenv": "^16.4.5",
+    "eslint": "^8.45.0",
+    "eslint-config-next": "^13.1.1",
+    "express-handlebars": "^7.1.0",
+    "framer-motion": "^11.0.8",
     "next": "^14.0.4",
+    "nodemailer": "^6.9.11",
+    "nodemailer-express-handlebars": "^6.1.2",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "typescript": "^5.3.3"
+    "react-google-recaptcha": "^3.1.0",
+    "react-hook-form": "^7.51.0",
+    "react-icons": "^5.0.1",
+    "zod": "^3.22.4"
   },
   "devDependencies": {
     "@tailwindcss/forms": "^0.5.7",
     "@types/aos": "^3.0.7",
+    "@types/node": "20.10.4",
+    "@types/nodemailer": "^6.4.14",
+    "@types/react": "18.2.42",
+    "@types/react-google-recaptcha": "^2.1.9",
     "autoprefixer": "^10.4.16",
     "postcss": "^8.4.32",
-    "tailwindcss": "^3.3.6"
+    "tailwindcss": "^3.3.6",
+    "typescript": "5.3.3"
   }
 }
