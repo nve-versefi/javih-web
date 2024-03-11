@@ -1,0 +1,87 @@
+/* CalendarOverrides.css */
+.react-calendar button {
+    background: inherit;
+    border: inherit;
+    outline: inherit;
+    padding: 0.8em 0.5em;
+    font-size: 18px;
+    font-weight: inherit;
+    line-height: inherit;
+    width: inherit;
+    height: inherit;
+    color: #333;
+    text-align: center;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.1); /* Important to override any global styles if necessary */
+    transform: none !important; /* Same as above */
+}
+
+/* CalendarOverrides.css */
+.react-calendar {
+    font-family: 'Arial', sans-serif; /* Choose a font that matches your design */
+    border: 1px solid #a0a096; /* Border color to match the design */
+    box-shadow: 0 3px 6px rgba(0,0,0,0.1); /* subtle shadow for depth */
+    border-radius: 8px; /* Rounded corners */
+  }
+  
+  .react-calendar__navigation {
+    background-color: #f5f5f5; /* Light grey background */
+    border-bottom: 1px solid #e0e0e0; /* A subtle separator */
+  }
+  
+  .react-calendar__navigation button {
+    color: #21586B; /* A dark blue color for buttons */
+    font-size: 16px;
+  }
+  
+  .react-calendar__month-view__days__day--weekend {
+    color: #d10000; /* Color for weekend days */
+  }
+  
+  .react-calendar__tile {
+    background: none; /* Remove any background */
+    color: #333; /* Standard text color */
+    border-radius: 4px; /* Rounded corners for each date tile */
+
+  }
+  
+  .react-calendar__tile--active {
+    background-color: #21586B; /* Background color for the active date */
+    color: white; /* Text color for the active date */
+  }
+
+  /* If you have a specific highlight class for events */
+  .highlight {
+    position: relative;
+  }
+  
+  .highlight::after {
+    content: ''; /* Remove the emoji */
+    display: block;
+    height: 3px; /* Height of the line */
+    background-color: #21586B; /* Color of the line */
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+  
+  /* Adjust the below as per the actual classes used by react-calendar for the navigation arrows */
+  .react-calendar__navigation button {
+    background: none; /* Assuming the circles are a background */
+    border-radius: 0; /* If they are due to border-radius */
+    /* Other styles remain unchanged */
+  }
+  
+  /* This style applies to the navigation labels (the month and year display) */
+  .react-calendar__navigation label {
+    font-size: 18px; /* Adjust to match design */
+    font-weight: bold; /* Adjust as needed */
+  }
+  
+  /* This will style the weekday headers (MON, TUE, etc.) */
+  .react-calendar__month-view__weekdays__weekday {
+    color: #21586B; /* Color matching the navigation buttons */
+    font-weight: bold;
+    font-size: 14px;
+  }
+  

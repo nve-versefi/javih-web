@@ -2,37 +2,63 @@
 import React, { useState, useEffect } from 'react';
 import Newsletter from '@/components/newsletter';
 import SectionBreak from '@/components/sectionbreak'; 
-import TextCard1 from '@/components/textcard1'; 
+import Landing from '@/components/landing'; 
 import ImageCard1 from '@/components/imagecard1';
-import TextCard2 from '@/components/textcard2'; 
+import Biografia from '@/components/biografia'; 
 import ImageCard2 from '@/components/imagecard2';
-import TextCard3 from '@/components/textcard3'; 
+import Videoteca from '@/components/videoteca'; 
 import ImageCard3 from '@/components/imagecard3';
-import TextCard4 from '@/components/textcard4'; 
+import Galeria from '@/components/galeria'; 
 import ImageCard4 from '@/components/imagecard4';
-import TextCard5 from '@/components/textcard5'; 
+import Conciertos from '@/components/conciertos'; 
 import ImageCard5 from '@/components/imagecard5';
-import TextCard6 from '@/components/textcard6'; 
-import ImageCard6 from '@/components/imagecard6';
-import TextCard7 from '@/components/textcard7';
+import Form from '@/components/form';
+import Calendar from '@/components/calendar'
 import  {metadata}  from "@/components/metadata"
 import { motion } from 'framer-motion';
 require('dotenv').config('/variables');
+import  carouselData  from '@/components/carouselData'; 
+
 
 export default function Home() {
 
   const variants = {
     hidden: (isTextCard: boolean) => ({
-      y: isTextCard ? -100 : 100, 
+      y: isTextCard ? -100 : 100,
       opacity: 0,
+      transition: {
+        duration: 0.5,
+        ease: 'easeOut',
+      },
     }),
     visible: {
       y: 0,
       opacity: 1,
-      transition: { duration: 0.5 },
+      transition: {
+        duration: 0.5,
+        ease: 'easeIn',
+        // When interrupted, use `onRest` to finalize the state
+        // This property isn't directly available in Framer Motion but demonstrates the intent
+        // You might need to implement a similar logic using Framer Motion's lifecycle events
+        onRest: () => {
+          // Logic to ensure animation reaches a "complete" state
+          // This is a conceptual implementation. You'll need to adapt it based on actual event handling in Framer Motion
+        },
+      },
     },
   };
   
+  const [selectedConcertIndex, setSelectedConcertIndex] = useState<number | null>(null);
+
+  const handleSelectDate = (date: Date) => {
+    const index = carouselData.findIndex(
+      (concert) => new Date(concert.date).toDateString() === date.toDateString()
+    );
+    
+    if (index !== -1) {
+      setSelectedConcertIndex(index); // Update the selected concert index
+    }
+  };
 
   return (
     
@@ -45,7 +71,7 @@ export default function Home() {
         viewport={{ once: false, amount: 0.5 }}
       >
         <div id="Landing">
-          <TextCard1 />
+          <Landing />
         </div>
       </motion.div>
 
@@ -67,7 +93,7 @@ export default function Home() {
         viewport={{ once: false, amount: 0.5 }}
       >
         <div id="Biografia">
-          <TextCard2 />
+          <Biografia />
         </div>
       </motion.div>
 
@@ -89,7 +115,7 @@ export default function Home() {
         viewport={{ once: false, amount: 0.5 }}
       >
         <div id="Video">
-          <TextCard3 />
+          <Videoteca />
         </div>
       </motion.div>
       <motion.div
@@ -110,7 +136,7 @@ export default function Home() {
         viewport={{ once: false, amount: 0.5 }}
       >
         <div id="Galeria">
-          <TextCard4 />
+          <Galeria />
         </div>
       </motion.div>
 
@@ -133,7 +159,7 @@ export default function Home() {
         viewport={{ once: false, amount: 0.5 }}
       >
         <div id="Conciertos">
-          <TextCard5 />
+          <Conciertos selectedConcertIndex={selectedConcertIndex}/>
         </div>
       </motion.div>
 
@@ -154,34 +180,12 @@ export default function Home() {
         whileInView="visible"
         viewport={{ once: false, amount: 0.5 }}
       >
-        <div id="Noticias">
-          <TextCard6 />
-        </div>
-      </motion.div>
-
-      <motion.div
-        custom={false} // This is where the custom prop is used
-        variants={variants}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: false, amount: 0.5 }}
-      >
-        <ImageCard6 />
-      </motion.div>
-
-      <motion.div
-        custom={true} // This is where the custom prop is used
-        variants={variants}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: false, amount: 0.5 }}
-      >
         <div id="Contacto">
-          <TextCard7 />
+          <Form />
         </div>
       </motion.div>
       <meta name="description" content={metadata.description} />
-      <SectionBreak />
+      <Calendar onSelectDate={handleSelectDate}/>
       <Newsletter />
     </div>
   )

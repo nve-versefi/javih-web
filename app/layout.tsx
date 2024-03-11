@@ -3,7 +3,7 @@ import './css/style.css'
 import { Inter, Architects_Daughter } from 'next/font/google'
 
 import Header from '@/components/ui/header'
-
+import CookieBanner from '@/components/cookiebanner';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -36,6 +36,7 @@ export default function RootLayout({
           {children}
         
         </div>
+        <CookieBanner />
       </body>
     </html>
   )

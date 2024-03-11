@@ -15,10 +15,10 @@ interface Data {
 const handlebarOptions = {
     viewEngine: {
         extName: ".handlebars",
-        partialsDir: path.resolve("./src/templates/"),
+        partialsDir: path.resolve("./templates/"),
         defaultLayout: false,
     },
-    viewPath: path.resolve("./src/templates/"),
+    viewPath: path.resolve("./templates/"),
     extName: ".handlebars",
 };
 
@@ -54,12 +54,20 @@ export default async function ContactApi(
             // @ts-ignore-next-line
             template: "contact", //
             context: {
-                nameSurname: nameSurname,
-                email: email,
-                phone: phone,
-                message: message,
+                
             },
         });
+
+        await transporter.sendMail({
+            from: `Pablo Hermosa <${process.env.CONTACT_FORM_SEND_EMAIL}>`, // Replace "Your Company Name" with your actual company name
+            to: email,
+            subject: "Thank you for your message",
+            template: "confirmation", // assuming you have a template named "thankyou"
+            context: {
+                nameSurname: nameSurname,
+            },
+        });
+
         res.status(200).json({ message: "success" });
     } catch (err) {
         res.status(500).json({ message: "an error occured" });

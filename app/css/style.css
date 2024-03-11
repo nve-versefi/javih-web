@@ -20,3 +20,91 @@
 [x-cloak=""] {
     display: none;
 }
+
+
+.carousel-button {
+    --button_size: 4em ;
+    --button_color: #FFFFFF; /* Assuming casal-500 is similar to a light gray */
+    --button_outline_color: #21586B; /* Dark blue color for the border and text */
+    --button_shadow_color: #21586B; /* Shadow color for the 3D effect */
+    --button_border_width: 2px; /* Width of the border */
+    
+    font-size: 17px; /* This can be adjusted to better fit the button if necessary */
+    font-weight: bold;
+    line-height: var(--button_size); /* Add this line to vertically center the text */
+    width: var(--button_size);
+    height: var(--button_size);
+    border: var(--button_border_width) solid var(--button_outline_color);
+    border-radius: 50%; /* Makes the button perfectly circular */
+    background: var(--button_color);
+    padding: 0; /* Remove padding or adjust if necessary */
+    color: var(--button_outline_color);
+    text-align: center; /* Add this line to horizontally center the text */
+    transition: all 0.1s ease;
+    transform: translateY(-0.2em);
+  
+    /* Initial state shadow for 3D effect */
+    box-shadow: 0 4px var(--button_shadow_color);
+  }
+  
+  .carousel-button:hover {
+    /* Increase the shadow to give the impression of the button being lifted */
+    box-shadow: 0 8px var(--button_shadow_color);
+    transform: translateY(-0.35em);
+  }
+  
+  .carousel-button:active {
+    /* Reduce shadow and reset transform to give the impression of the button being pressed */
+    box-shadow: 0 2px var(--button_shadow_color);
+    transform: translateY(0);
+  }
+  
+  .btn,
+.btn-sm {
+    @apply font-medium inline-flex items-center justify-center border border-transparent rounded-sm leading-snug transition duration-150 ease-in-out;
+}
+
+.btn {
+    @apply px-8 py-3;
+}
+
+.btn-sm {
+    @apply px-4 py-2;
+}
+
+.galery-button{
+  --button_size: 2.5em ;
+  --button_color: #FFFFFF; /* Assuming casal-500 is similar to a light gray */
+  --button_outline_color: #21586B; /* Dark blue color for the border and text */
+  --button_shadow_color: #21586B; /* Shadow color for the 3D effect */
+  --button_border_width: 2px; /* Width of the border */
+  
+  font-size: 17px; /* This can be adjusted to better fit the button if necessary */
+  font-weight: bold;
+  line-height: var(--button_size); /* Add this line to vertically center the text */
+  width: var(--button_size);
+  height: var(--button_size);
+  border: var(--button_border_width) solid var(--button_outline_color);
+  border-radius: 50%; /* Makes the button perfectly circular */
+  background: var(--button_color);
+  padding: 0; /* Remove padding or adjust if necessary */
+  color: var(--button_outline_color);
+  text-align: center; /* Add this line to horizontally center the text */
+  transition: all 0.1s ease;
+  transform: translateY(-0.2em);
+
+  /* Initial state shadow for 3D effect */
+  box-shadow: 0 4px var(--button_shadow_color);
+}
+
+.galery-button:hover{
+  /* Increase the shadow to give the impression of the button being lifted */
+  box-shadow: 0 8px var(--button_shadow_color);
+  transform: translateY(-0.35em);
+}
+
+.galery-button:active{
+  /* Reduce shadow and reset transform to give the impression of the button being pressed */
+  box-shadow: 0 2px var(--button_shadow_color);
+  transform: translateY(0);
+}

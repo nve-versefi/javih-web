@@ -121,4 +121,152 @@
   .card.leaving {
     transform: translateY(-100%);
   }
+  .video-carousel-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
   
+  .video-thumbnails {
+    flex: 1;
+    display: flex;
+    justify-content: center; /* Center thumbnail in allocated flex space */
+  }
+  
+  .thumbnail {
+    width: 100px; /* Adjust thumbnail size as needed */
+    height: auto;
+    cursor: pointer;
+    margin: 0 10px; /* Adds space around thumbnails */
+  }
+  
+  .thumbnail.prev {
+    /* Additional styles for left thumbnail */
+  }
+  
+  .thumbnail.next {
+    /* Additional styles for right thumbnail */
+  }
+  
+  .video-main {
+    flex: 2; /* Adjust flex-grow to scale the main video */
+    padding: 0 20px; /* Adds space around the main video */
+  }
+  
+  .video-player {
+    width: 100%; /* Full width of the .video-main container */
+    height: auto; /* Maintain aspect ratio */
+    max-width: 500px; /* Adjust max-width as needed */
+  }
+  
+  .video-nav-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+  }
+  
+  .video-nav-button.prev {
+    left: 10px; /* Position left arrow to the left */
+  }
+  
+  .video-nav-button.next {
+    right: 10px; /* Position right arrow to the right */
+  }
+  /* ScrollBarStyles.css */
+/* For Webkit browsers */
+/* ScrollBarStyles.css */
+/* For Webkit browsers */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 12px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent; /* Makes the track background transparent */
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #5F9EA0; /* This is the hexadecimal color for Tailwind's casal-500 */
+  border-radius: 20px;
+}
+
+/* For Firefox */
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: #5F9EA0 transparent; /* casal-500 color for the thumb and transparent for the track */
+}
+
+.ribbon {
+  position: absolute;
+  bottom: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  backgroundColor: #7a9e7e;
+  color: #d0f5c9;
+  width: 150px;
+  textAlign: left;
+  paddingLeft: 8px;
+  height: 37.5px;
+  lineHeight: 37.5px;
+  clipPath: polygon(0 0, 0 100%, 100% 100%, 60% 50%, 100% 0);
+  border-top: 2px solid #171d1d;
+  border-bottom: 2px solid #171d1d;
+  z-index: 2;
+}
+
+.ribbon::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: -2px; /* The thickness of your border */
+  height: 100%;
+  width: 2px; /* The thickness of your border */
+  background-color: #171d1d;
+  clip-path: polygon(0 0, 0 100%, 60% 50%);
+}
+
+.ribbon::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  right: -2px; /* The thickness of your border */
+  height: 100%;
+  width: 2px; /* The thickness of your border */
+  background-color: #171d1d;
+  clip-path: polygon(40% 50%, 100% 100%, 100% 0);
+}
+
+@keyframes blink-cursor {
+  from, to { border-color: transparent }
+  50% { border-color: black }
+}
+
+.title-container {
+  font-size: 2.5rem; /* Adjust size as needed */
+  position: absolute;
+  top: 0; 
+  margin-top: 3em;
+  white-space: nowrap;
+
+  padding-right: .2em; /* This padding can be adjusted */
+  border-right: .1em solid black; /* The typewriter cursor */
+  animation: blink-cursor 0.75s steps(40) infinite;
+}
+
+.first-name {
+  font-weight: medium; /* Your desired weight */
+  color: #21586B; /* Your desired color */
+  font-family: 'Your Font', sans-serif; /* Your desired font */
+}
+
+.title-name {
+  font-weight: lighter; /* Your desired weight */
+  color: #C6A502; /* Your desired color */
+  font-family: 'Your Second Font', sans-serif; /* Your desired font */
+  margin-left: 0.5em; /* Adjust the spacing between the two parts of the title */
+}

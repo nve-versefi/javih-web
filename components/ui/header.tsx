@@ -21,12 +21,12 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="bg-white shadow-lg fixed w-full z-50 top-0">
+    <nav className="bg-casal-500 shadow-lg fixed w-full z-50 top-0">
       <div className="max-w-6xl mx-auto px-4">
         <div className="flex justify-between items-center">
           <Link href="/" passHref>
-            <div className="flex items-center cursor-pointer">
-              <Image src="/path/to/your/logo.png" alt="Logo" width={32} height={32} />
+            <div className="flex items-center cursor-pointer py-2">
+              <Image src="/images/logo.png" alt="Logo" width={68} height={68} />
          
             </div>
           </Link>
@@ -55,10 +55,11 @@ const Navbar = () => {
           </div>
           
           <div className={`md:flex items-center ${isOpen ? 'flex' : 'hidden'} flex-col md:flex-row`}>
-            <div className="py-4 px-2 text-gray-500 font-semibold cursor-pointer" onClick={() => scrollToSection('Biografia')}>Biografia</div>
-            <div className="py-4 px-2 text-gray-500 font-semibold cursor-pointer" onClick={() => scrollToSection('Videos')}>Multimedia</div>
-            <div className="py-4 px-2 text-gray-500 font-semibold cursor-pointer" onClick={() => scrollToSection('Conciertos')}>Conciertos</div>
-            <div className="py-4 px-2 text-gray-500 font-semibold cursor-pointer" onClick={() => scrollToSection('Contacto')}>Contacto</div>
+            <div className="py-4 px-8 text-white font-semibold text-2xl cursor-pointer" onClick={() => scrollToSection('Biografia')}>Biografia</div>
+            <div className="py-4 px-8 text-white font-semibold text-2xl cursor-pointer" onClick={() => scrollToSection('Video')}>Videoteca</div>
+            <div className="py-4 px-8 text-white font-semibold text-2xl cursor-pointer" onClick={() => scrollToSection('Galeria')}>Galería</div>
+            <div className="py-4 px-8 text-white font-semibold text-2xl cursor-pointer" onClick={() => scrollToSection('Conciertos')}>Conciertos</div>
+            <div className="py-4 px-8 text-white font-semibold text-2xl cursor-pointer" onClick={() => scrollToSection('Contacto')}>Contacto</div>
           </div>
         </div>
       </div>
