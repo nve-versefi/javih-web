@@ -50,11 +50,14 @@ export default async function ContactApi(
             from: `${nameSurname} ${email}`,
             replyTo: email,
             to: process.env.CONTACT_FORM_RECEIVE_EMAIL,
-            subject: `Contact form from - ${nameSurname}`,
+            subject: `Contact form from ${nameSurname}`,
             // @ts-ignore-next-line
             template: "contact", //
             context: {
-                
+                nameSurname: nameSurname,
+                email: email,
+                phone: phone,
+                message: message,
             },
         });
 
@@ -62,9 +65,13 @@ export default async function ContactApi(
             from: `Pablo Hermosa <${process.env.CONTACT_FORM_SEND_EMAIL}>`, // Replace "Your Company Name" with your actual company name
             to: email,
             subject: "Thank you for your message",
-            template: "confirmation", // assuming you have a template named "thankyou"
+              // @ts-ignore-next-line
+            template: "contact", 
             context: {
                 nameSurname: nameSurname,
+                email: email,
+                phone: phone,
+                message: message,
             },
         });
 

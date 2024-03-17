@@ -1,0 +1,45 @@
+[
+    {
+        "title": "Título 1",
+        "date": "2024-03-18T20:00:00.000Z",
+        "location": "Localización 1",
+        "details": "Orquesta 1",
+        "imageUrl": "/images/piano.png"
+      },
+      {
+        "title": "Título 2",
+        "date": "Fecha y Hora 2",
+        "location": "Localización 2",
+        "details": "Orquesta 2",
+        "imageUrl": "/images/violin.jpg"
+      },
+
+      {
+        "title": "Título 1",
+        "date": "2024-03-18T20:00:00.000Z",
+        "location": "Localización 1",
+        "details": "Orquesta 1",
+        "imageUrl": "/images/piano.png"
+      },
+      {
+        "title": "Título 2",
+        "date": "Fecha y Hora 2",
+        "location": "Localización 2",
+        "details": "Orquesta 2",
+        "imageUrl": "/images/violin.jpg"
+      },
+      {
+        "title": "Título 1",
+        "date": "2024-03-18T20:00:00.000Z",
+        "location": "Localización 1",
+        "details": "Orquesta 1",
+        "imageUrl": "/images/piano.png"
+      },
+      {
+        "title": "Título 2",
+        "date": "Fecha y Hora 2",
+        "location": "Localización 2",
+        "details": "Orquesta 2",
+        "imageUrl": "/images/violin.jpg"
+      }
+  ]

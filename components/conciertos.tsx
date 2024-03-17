@@ -1,29 +1,57 @@
 import React, { useState, useEffect } from 'react';
-import carouselData from './carouselData';
+
+interface CarouselDataItem {
+  _id: string;
+  title: string;
+  date: string;
+  location: string;
+  details: string;
+  imageUrl: string;
+}
 
 interface CarouselCardProps {
+  items:CarouselDataItem[];
   initialIndex?: number;
   selectedConcertIndex: number | null;
 }
 
-const CarouselCard: React.FC<CarouselCardProps> = ({ initialIndex = 0, selectedConcertIndex }) => {
+
+const CarouselCard: React.FC<CarouselCardProps> = ({ initialIndex = 0, selectedConcertIndex}) => {
+  const [concertItems, setConcertItems] = useState<CarouselDataItem[]>([]);
   const [currentIndex, setCurrentIndex] = useState(initialIndex);
     
   // States to control the visual effect of each button
   const [prevClicked, setPrevClicked] = useState(false);
   const [nextClicked, setNextClicked] = useState(false);
 
-  
+  useEffect(() => {
+    // Define a function to fetch data
+    const fetchData = async () => {
+      try {
+        const response = await fetch('/api/conciertos'); // Make sure this URL is correct
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        const data = await response.json();
+        setConcertItems(data); // Update state with the fetched data
+      } catch (error) {
+        console.error('There has been a problem with your fetch operation:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   const next = () => {
     setCurrentIndex((prevIndex) =>
-      prevIndex === carouselData.length - 1 ? 0 : prevIndex + 1
+      prevIndex === concertItems.length - 1 ? 0 : prevIndex + 1
     );
     triggerClickEffect('next');
   };
 
   const prev = () => {
     setCurrentIndex((prevIndex) =>
-      prevIndex === 0 ? carouselData.length - 1 : prevIndex - 1
+      prevIndex === 0 ? concertItems.length - 1 : prevIndex - 1
     );
     triggerClickEffect('prev');
   };
@@ -38,24 +66,13 @@ const CarouselCard: React.FC<CarouselCardProps> = ({ initialIndex = 0, selectedC
       setTimeout(() => setPrevClicked(false), 300); // Reset after 300ms
     }
   };
-  useEffect(() => {
-    if (selectedConcertIndex !== null) {
-      setCurrentIndex(selectedConcertIndex);
-      // Scroll the card into view
-      const cardToScrollTo = document.getElementById(`card-${selectedConcertIndex}`);
-      cardToScrollTo?.scrollIntoView({
-        behavior: 'smooth',
-        block: 'nearest',
-        inline: 'start'
-      });
-    }
-  }, [selectedConcertIndex]);
+    
   return (
-    <div className="flex flex-col h-screen bg-gray-100 overflow-hidden">
+    <div className="flex flex-col h-screen border border-2 border-casal-500 overflow-hidden">
       <h2 className="text-6xl text-center text-casal-500 font-bold my-8 mb-16">Conciertos</h2>
       <div className="flex-grow w-full overflow-x-auto snap-x snap-mandatory custom-scrollbar">
         <div className="flex min-w-max">
-          {carouselData.map((item, index) => (
+          {concertItems.map((item, index) => (
             <div
             id={`card-${index}`} 
             key={index}

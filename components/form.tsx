@@ -9,20 +9,22 @@ import { FiMail, FiPhone, FiUser } from "react-icons/fi";
 
 
 const formSchema = z.object({
-  nameSurname: z.string().min(1, { message: "Full name is required" }),
-  email: z.string().min(1, { message: "Email is required" }).email({
-    message: "Must be a valid email",
+  nameSurname: z.string().min(1, { message: "Se requiere nombre completo" }),
+  email: z.string().min(1, { message: "Se requiere email" }).email({
+    message: "Introduzca una dirección email válida por favor",
   }),
   phone: z
     .string()
-    .min(1, { message: "Phone is required" })
-    .regex(/^(\+?1)?[2-9]\d{2}[2-9](?!11)\d{6}$/, {
-      message: "Must be a valid phone number",
+    .min(1, { message: "Se requiere el número de teléfono" })
+    .regex(/^(?:(?:\+|00)34)?[6789]\d{8}$/, {
+      message: "Introduzca un número de teléfono válida por favor",
     }),
   message: z
     .string()
-    .min(10, { message: "Message must be at least 10 characters" })
-    .max(1000, { message: "Message must be less than 1000 characters" }),
+    .min(10, { message: "El mensaje debe ser mayor de 10 caracteres" })
+    .max(1000, { message: "El mensaje debe ser menos de 1000 caracteres" }),
+  termsAndConditions: z.boolean().refine((val) => val, { message: "Debe aceptar los términos de uso y la política de privacidad para enviar el mensaje" }),
+  marketingCommunications: z.boolean().optional(),
 });
 
 type FormData = z.infer<typeof formSchema>;
@@ -40,13 +42,7 @@ export default function Form() {
   } = useForm<FormData>({
     resolver: zodResolver(formSchema),
     // You can set default values for the form here for testing purposes
-    defaultValues: {
-    nameSurname: "",
-    email: "",
-    phone: "",
-    message:
-         "",
-     },
+  
   });
   const processForm = async (data: FormData) => {
     const token = await recaptchaRef?.current?.executeAsync();
@@ -80,7 +76,7 @@ export default function Form() {
   };
 
   return (
-    <form className="m-8 mt-40 mx-32" onSubmit={handleSubmit(processForm)} noValidate>
+    <form className="m-8 mx-32" onSubmit={handleSubmit(processForm)} noValidate>
       <div className="mb-4">
         <div className="relative">
           {errors.nameSurname?.message ? (
@@ -193,7 +189,7 @@ export default function Form() {
     <input
       type="checkbox"
       className="form-checkbox h-5 w-5 text-black border-gray-300 rounded focus:ring-0"
-      //{...register("checkboxOption1")}
+      {...register("termsAndConditions")}
     />
     <span className="ml-2 text-gray-700">Acepto los términos de uso y la política de privacidad</span>
   </label>
@@ -201,7 +197,7 @@ export default function Form() {
     <input
       type="checkbox"
       className="form-checkbox h-5 w-5 text-black border-gray-300 rounded focus:ring-0"
-      //{...register("checkboxOption2")}
+      {...register("marketingCommunications")}
     />
     <span className="ml-2 text-gray-700">Acepto recibir comunicaciones de marketing</span>
   </label>

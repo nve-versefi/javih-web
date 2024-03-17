@@ -1,5 +1,5 @@
 'use client'
-import React, { useState, useEffect } from 'react';
+import React, { createContext, useContext, useState } from 'react';
 import Newsletter from '@/components/newsletter';
 import SectionBreak from '@/components/sectionbreak'; 
 import Landing from '@/components/landing'; 
@@ -17,11 +17,9 @@ import Calendar from '@/components/calendar'
 import  {metadata}  from "@/components/metadata"
 import { motion } from 'framer-motion';
 require('dotenv').config('/variables');
-import  carouselData  from '@/components/carouselData'; 
 
 
 export default function Home() {
-
   const variants = {
     hidden: (isTextCard: boolean) => ({
       y: isTextCard ? -100 : 100,
@@ -37,29 +35,24 @@ export default function Home() {
       transition: {
         duration: 0.5,
         ease: 'easeIn',
-        // When interrupted, use `onRest` to finalize the state
-        // This property isn't directly available in Framer Motion but demonstrates the intent
-        // You might need to implement a similar logic using Framer Motion's lifecycle events
+       
         onRest: () => {
-          // Logic to ensure animation reaches a "complete" state
-          // This is a conceptual implementation. You'll need to adapt it based on actual event handling in Framer Motion
+         
         },
       },
     },
   };
   
-  const [selectedConcertIndex, setSelectedConcertIndex] = useState<number | null>(null);
-
   const handleSelectDate = (date: Date) => {
-    const index = carouselData.findIndex(
+    const index = concertItems.findIndex(
       (concert) => new Date(concert.date).toDateString() === date.toDateString()
     );
-    
+  
     if (index !== -1) {
-      setSelectedConcertIndex(index); // Update the selected concert index
+      setSelectedConcertIndex(index);
+      // Navigate to Carousel component if necessary
     }
   };
-
   return (
     
     <div className="container mx-auto max-w-full p-0">
@@ -108,7 +101,7 @@ export default function Home() {
       </motion.div>
       
       <motion.div
-        custom={true} // This is where the custom prop is used
+        custom={true}
         variants={variants}
         initial="hidden"
         whileInView="visible"
@@ -119,7 +112,7 @@ export default function Home() {
         </div>
       </motion.div>
       <motion.div
-        custom={false} // This is where the custom prop is used
+        custom={false} 
         variants={variants}
         initial="hidden"
         whileInView="visible"
@@ -129,7 +122,7 @@ export default function Home() {
       </motion.div>
 
       <motion.div
-        custom={true} // This is where the custom prop is used
+        custom={true} 
         variants={variants}
         initial="hidden"
         whileInView="visible"
@@ -140,9 +133,8 @@ export default function Home() {
         </div>
       </motion.div>
 
-
       <motion.div
-        custom={false} // This is where the custom prop is used
+        custom={false} 
         variants={variants}
         initial="hidden"
         whileInView="visible"
@@ -152,7 +144,7 @@ export default function Home() {
       </motion.div>
 
       <motion.div
-        custom={true} // This is where the custom prop is used
+        custom={true} 
         variants={variants}
         initial="hidden"
         whileInView="visible"
@@ -164,7 +156,7 @@ export default function Home() {
       </motion.div>
 
       <motion.div
-        custom={false} // This is where the custom prop is used
+        custom={false} 
         variants={variants}
         initial="hidden"
         whileInView="visible"
@@ -173,21 +165,25 @@ export default function Home() {
         <ImageCard5 />
       </motion.div>
 
-      <motion.div
-        custom={true} // This is where the custom prop is used
-        variants={variants}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: false, amount: 0.5 }}
-      >
-        <div id="Contacto">
-          <Form />
+      <div className="flex flex-wrap justify-between items-start mb-16 gap-4 mt-40">
+          <div className="flex flex-col w-full md:w-1/2">
+          <h2 className="text-3xl text-casal-500 font-bold text-center">Formulario de contacto</h2>
+            <Form/>
         </div>
-      </motion.div>
-      <meta name="description" content={metadata.description} />
-      <Calendar onSelectDate={handleSelectDate}/>
+          <div className="flex flex-col w-full md:w-1/2 lg:w-5/12">
+            <div className="mb-4">
+              <h2 className="text-3xl text-casal-500 font-bold text-center">Calendario</h2>
+                <div className="w-full ">
+                  <Calendar onSelectDate={handleSelectDate} />
+                </div>         
+            </div>
+          </div>
+      </div>
+
       <Newsletter />
+
     </div>
   )
-}
 
+  }
+ 

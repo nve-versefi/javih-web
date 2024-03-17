@@ -1,23 +1,43 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css'; // Default styling, you can customize it as needed
-import carouselData from './carouselData'; // Ensure the path is correct
 import './/../app/css/calendar.css';
 
 interface ConcertCalendarProps {
   onSelectDate: (date: Date) => void;
 }
 
+interface CarouselDataItem {
+  _id: string;
+  title: string;
+  date: string;
+  location: string;
+  details: string;
+  imageUrl: string;
+}
+
 const ConcertCalendar: React.FC<ConcertCalendarProps> = ({ onSelectDate }) => {
-  // Ensuring the state can hold either a single Date, a range, or a string
   const [value, setValue] = useState<Date | [Date, Date] | string>(new Date());
+  const [concertData, setConcertData] = useState<CarouselDataItem[]>([]);
+
+  useEffect(() => {
+    const fetchConcertData = async () => {
+      const response = await fetch('/api/conciertos');
+      if (response.ok) {
+        const data: CarouselDataItem[] = await response.json();
+        setConcertData(data);
+      }
+    };
+
+    fetchConcertData();
+  }, []);
 
   const handleChange = (newValue: any, event: React.MouseEvent<HTMLButtonElement> | undefined) => {
     setValue(newValue);
   };
 
   const findConcertByDate = (date: Date): number | undefined => {
-    return carouselData.findIndex(concert =>
+    return concertData.findIndex(concert =>
       new Date(concert.date).toDateString() === date.toDateString()
     );
   };
