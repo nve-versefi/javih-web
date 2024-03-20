@@ -1,5 +1,5 @@
 'use client'
-import React, { createContext, useContext, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Newsletter from '@/components/newsletter';
 import SectionBreak from '@/components/sectionbreak'; 
 import Landing from '@/components/landing'; 
@@ -20,6 +20,9 @@ require('dotenv').config('/variables');
 
 
 export default function Home() {
+  const [selectedConcertIndex, setSelectedConcertIndex] = useState<number | null>(null);
+  const [concertItems, setConcertItems] = useState<any[]>([]);
+
   const variants = {
     hidden: (isTextCard: boolean) => ({
       y: isTextCard ? -100 : 100,
@@ -43,6 +46,17 @@ export default function Home() {
     },
   };
   
+  useEffect(() => {
+    const fetchConcertItems = async () => {
+      // Assuming '/api/conciertos' endpoint returns your concert data
+      const response = await fetch('/api/conciertos');
+      const data = await response.json();
+      setConcertItems(data);
+    };
+
+    fetchConcertItems();
+  }, []);
+
   const handleSelectDate = (date: Date) => {
     const index = concertItems.findIndex(
       (concert) => new Date(concert.date).toDateString() === date.toDateString()
@@ -50,9 +64,17 @@ export default function Home() {
   
     if (index !== -1) {
       setSelectedConcertIndex(index);
-      // Navigate to Carousel component if necessary
+      // Scroll to Conciertos section
+      document.getElementById("Conciertos")?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    } else {
+      console.log("No concert found for this date", date);
     }
   };
+
+
   return (
     
     <div className="container mx-auto max-w-full p-0">
@@ -144,16 +166,16 @@ export default function Home() {
       </motion.div>
 
       <motion.div
-        custom={true} 
-        variants={variants}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: false, amount: 0.5 }}
-      >
-        <div id="Conciertos">
-          <Conciertos selectedConcertIndex={selectedConcertIndex}/>
-        </div>
-      </motion.div>
+  custom={true} 
+  variants={variants}
+  initial="hidden"
+  whileInView="visible"
+  viewport={{ once: false, amount: 0.5 }}
+>
+  <div id="Conciertos">
+    <Conciertos items={concertItems} selectedConcertIndex={selectedConcertIndex}/>
+  </div>
+</motion.div>
 
       <motion.div
         custom={false} 
@@ -171,12 +193,12 @@ export default function Home() {
             <Form/>
         </div>
           <div className="flex flex-col w-full md:w-1/2 lg:w-5/12">
-            <div className="mb-4">
-              <h2 className="text-3xl text-casal-500 font-bold text-center">Calendario</h2>
-                <div className="w-full ">
-                  <Calendar onSelectDate={handleSelectDate} />
-                </div>         
-            </div>
+          <div className="mb-4">
+    <h2 className="text-3xl text-casal-500 font-bold text-center">Calendario</h2>
+    <div className="w-full ">
+      <Calendar onSelectDate={handleSelectDate} concertData={concertItems} />
+    </div>         
+  </div>
           </div>
       </div>
 

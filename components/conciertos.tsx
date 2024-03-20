@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 
 interface CarouselDataItem {
   _id: string;
@@ -10,74 +10,60 @@ interface CarouselDataItem {
 }
 
 interface CarouselCardProps {
-  items:CarouselDataItem[];
+  items: CarouselDataItem[];
   initialIndex?: number;
   selectedConcertIndex: number | null;
 }
 
-
-const CarouselCard: React.FC<CarouselCardProps> = ({ initialIndex = 0, selectedConcertIndex}) => {
-  const [concertItems, setConcertItems] = useState<CarouselDataItem[]>([]);
-  const [currentIndex, setCurrentIndex] = useState(initialIndex);
-    
-  // States to control the visual effect of each button
-  const [prevClicked, setPrevClicked] = useState(false);
-  const [nextClicked, setNextClicked] = useState(false);
-
+const CarouselCard: React.FC<CarouselCardProps> = ({ items, initialIndex = 0, selectedConcertIndex }) => {
+  const [currentIndex, setCurrentIndex] = React.useState(initialIndex);
+  const carouselRef = useRef<HTMLDivElement>(null); // Add a ref to the carousel container
+  
   useEffect(() => {
-    // Define a function to fetch data
-    const fetchData = async () => {
-      try {
-        const response = await fetch('/api/conciertos'); // Make sure this URL is correct
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        const data = await response.json();
-        setConcertItems(data); // Update state with the fetched data
-      } catch (error) {
-        console.error('There has been a problem with your fetch operation:', error);
-      }
-    };
+    if (selectedConcertIndex !== null && selectedConcertIndex !== currentIndex) {
+      setCurrentIndex(selectedConcertIndex);
+      scrollToConcert(selectedConcertIndex);
+    }
+  }, [selectedConcertIndex]);
 
-    fetchData();
-  }, []);
+  const scrollToConcert = (index: number) => {
+    const carousel = carouselRef.current;
+    const cardToScrollTo = carousel?.querySelector(`#card-${index}`);
+  
+    if (cardToScrollTo && carousel) {
+      // Use type assertion here to treat cardToScrollTo as HTMLElement
+      const scrollAmount = (cardToScrollTo as HTMLElement).offsetLeft - carousel.offsetLeft;
+      carousel.scrollTo({
+        left: scrollAmount - carousel.offsetWidth / 2 + (cardToScrollTo as HTMLElement).offsetWidth / 2,
+        behavior: 'smooth'
+      });
+    }
+  };
+  
 
   const next = () => {
-    setCurrentIndex((prevIndex) =>
-      prevIndex === concertItems.length - 1 ? 0 : prevIndex + 1
-    );
-    triggerClickEffect('next');
+    const nextIndex = currentIndex === items.length - 1 ? 0 : currentIndex + 1;
+    setCurrentIndex(nextIndex);
+    scrollToConcert(nextIndex);
   };
 
   const prev = () => {
-    setCurrentIndex((prevIndex) =>
-      prevIndex === 0 ? concertItems.length - 1 : prevIndex - 1
-    );
-    triggerClickEffect('prev');
+    const prevIndex = currentIndex === 0 ? items.length - 1 : currentIndex - 1;
+    setCurrentIndex(prevIndex);
+    scrollToConcert(prevIndex);
   };
 
-  // Function to handle the visual feedback for button clicks
-  const triggerClickEffect = (button: 'next' | 'prev') => {
-    if (button === 'next') {
-      setNextClicked(true);
-      setTimeout(() => setNextClicked(false), 300); // Reset after 300ms
-    } else {
-      setPrevClicked(true);
-      setTimeout(() => setPrevClicked(false), 300); // Reset after 300ms
-    }
-  };
-    
   return (
     <div className="flex flex-col h-screen border border-2 border-casal-500 overflow-hidden">
       <h2 className="text-6xl text-center text-casal-500 font-bold my-8 mb-16">Conciertos</h2>
-      <div className="flex-grow w-full overflow-x-auto snap-x snap-mandatory custom-scrollbar">
+      <div ref={carouselRef} className="flex-grow w-full overflow-x-auto snap-x snap-mandatory custom-scrollbar">
         <div className="flex min-w-max">
-          {concertItems.map((item, index) => (
+          {items.map((item, index) => (
             <div
-            id={`card-${index}`} 
-            key={index}
-            className={`snap-center shrink-0 first:pl-4 last:pr-4 mx-2 min-w-[30%]`}
-          >
+              id={`card-${index}`}
+              key={index}
+              className={`snap-center shrink-0 first:pl-4 last:pr-4 mx-2 min-w-[30%]`}
+            >
               <div className="flex flex-col items-center p-8 mx-8 bg-white shadow rounded-lg">
                 <div className="w-full h-80 relative mb-4">
                   <img src={item.imageUrl} alt={item.title} className="absolute inset-0 mb-8 w-full h-full object-cover" />
@@ -92,18 +78,8 @@ const CarouselCard: React.FC<CarouselCardProps> = ({ initialIndex = 0, selectedC
         </div>
       </div>
       <div className="flex justify-between absolute w-full bottom-0 pb-4 px-4">
-        <button
-          onClick={prev}
-          className={`text-black ${prevClicked ? 'bg-blue-500 shadow-xl' : 'hover:bg-blue-100'} transition duration-300 ease-in-out`}
-        >
-          &lt;
-        </button>
-        <button
-          onClick={next}
-          className={`text-black ${nextClicked ? 'bg-blue-500 shadow-xl' : 'hover:bg-blue-100'} transition duration-300 ease-in-out`}
-        >
-          &gt;
-        </button>
+        <button onClick={prev} className="text-black hover:bg-blue-100 transition duration-300 ease-in-out">&lt;</button>
+        <button onClick={next} className="text-black hover:bg-blue-100 transition duration-300 ease-in-out">&gt;</button>
       </div>
     </div>
   );

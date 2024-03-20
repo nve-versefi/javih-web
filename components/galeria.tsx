@@ -26,17 +26,17 @@ const CarouselCard: React.FC = () => {
     });
   };
 
-  // Calculate the indexes for the visible images
-  const getVisibleIndexes = (centerIndex: number) => {
+  const getVisibleIndexes = (centerIndex: number): number[] => {
     const totalImages = imagePaths.length;
-    let indexes = [];
+    let indexes: number[] = []; // Explicitly typing the array as number[]
 
     for (let i = -2; i <= 2; i++) {
       indexes.push((centerIndex + i + totalImages) % totalImages);
     }
 
     return indexes;
-  };
+};
+
 
   const visibleIndexes = getVisibleIndexes(currentIndex);
 

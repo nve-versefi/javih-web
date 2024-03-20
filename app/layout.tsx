@@ -1,9 +1,8 @@
 import './css/style.css'
 
 import { Inter, Architects_Daughter } from 'next/font/google'
-
-import Header from '@/components/ui/header'
 import CookieBanner from '@/components/cookiebanner';
+import dynamic from 'next/dynamic';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -18,10 +17,10 @@ const architects_daughter = Architects_Daughter({
   display: 'swap'
 })
 
-export const metadata = {
-  title: 'Javier Hermosa',
-  description: 'Director de Orquesta',
-}
+
+const HeaderNoSSR = dynamic(() => import('@/components/ui/header'), {
+  ssr: false,
+});
 
 export default function RootLayout({
   children,
@@ -32,7 +31,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${inter.variable} ${architects_daughter.variable} font-inter antialiased bg-white-900 text-gray-200 tracking-tight`}>
         <div className="flex flex-col min-h-screen overflow-hidden">
-          <Header />
+          <HeaderNoSSR />
           {children}
         
         </div>

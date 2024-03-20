@@ -1,11 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css'; // Default styling, you can customize it as needed
-import './/../app/css/calendar.css';
-
-interface ConcertCalendarProps {
-  onSelectDate: (date: Date) => void;
-}
+import '../app/css/calendar.css'; // Adjust the path as necessary
 
 interface CarouselDataItem {
   _id: string;
@@ -16,21 +12,13 @@ interface CarouselDataItem {
   imageUrl: string;
 }
 
-const ConcertCalendar: React.FC<ConcertCalendarProps> = ({ onSelectDate }) => {
+interface ConcertCalendarProps {
+  onSelectDate: (date: Date) => void;
+  concertData: CarouselDataItem[]; // Added prop for concert data
+}
+
+const ConcertCalendar: React.FC<ConcertCalendarProps> = ({ onSelectDate, concertData }) => {
   const [value, setValue] = useState<Date | [Date, Date] | string>(new Date());
-  const [concertData, setConcertData] = useState<CarouselDataItem[]>([]);
-
-  useEffect(() => {
-    const fetchConcertData = async () => {
-      const response = await fetch('/api/conciertos');
-      if (response.ok) {
-        const data: CarouselDataItem[] = await response.json();
-        setConcertData(data);
-      }
-    };
-
-    fetchConcertData();
-  }, []);
 
   const handleChange = (newValue: any, event: React.MouseEvent<HTMLButtonElement> | undefined) => {
     setValue(newValue);
